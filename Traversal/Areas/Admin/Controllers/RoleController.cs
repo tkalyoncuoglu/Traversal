@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Traversal.Areas.Admin.Models;
 
 namespace Traversal.Areas.Admin.Controllers
@@ -63,8 +62,8 @@ namespace Traversal.Areas.Admin.Controllers
             var value = _roleManager.Roles.FirstOrDefault(x => x.Id == id);
             UpdateRoleViewModel model = new UpdateRoleViewModel()
             {
-                Id = value.Id,
-                Name = value.Name,
+                Id = Convert.ToInt32(value?.Id),
+                Name = value?.Name,
             };
             return View(model);
         }
@@ -94,7 +93,7 @@ namespace Traversal.Areas.Admin.Controllers
             foreach (var item in roles)
             {
                 RoleAssignViewModel model = new RoleAssignViewModel();
-                model.RoleId=item.Id;
+                model.RoleId=Convert.ToInt32(item.Id);
                 model.RoleName = item.Name;
                 model.RoleExist = userRoles.Contains(item.Name);
                 modelList.Add(model);
@@ -105,7 +104,7 @@ namespace Traversal.Areas.Admin.Controllers
         public async Task<IActionResult> AssignRole(List<RoleAssignViewModel> model)
         {
             var userid = TempData["UserId"];
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == int.Parse(userid.ToString()));
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == (int)userid);
             foreach (var item in model)
             {
                 if (item.RoleExist)

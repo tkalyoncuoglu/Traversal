@@ -18,9 +18,9 @@ namespace Traversal.ViewComponents.MemberDashboard
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var c = new Context();
-            ViewBag.activeReservations = c.Reservations.Where(x=>x.AppUserID==user.Id && x.Status=="Onaylandı").Count();
-            ViewBag.pastReservations = c.Reservations.Where(x => x.AppUserID == user.Id && x.Status == "Geçmiş Rezervasyon").Count();
-            ViewBag.waitApproveReservations= c.Reservations.Where(x => x.AppUserID == user.Id && x.Status == "Onay Bekliyor").Count();
+            ViewBag.activeReservations = c.Reservations.Where(x=>x.AppUserId==user.Id && x.Status=="Onaylandı").Count();
+            ViewBag.pastReservations = c.Reservations.Where(x => x.AppUserId == user.Id && x.Status == "Geçmiş Rezervasyon").Count();
+            ViewBag.waitApproveReservations= c.Reservations.Where(x => x.AppUserId == user.Id && x.Status == "Onay Bekliyor").Count();
             ViewBag.totalDestination = c.Destinations.Count();
             ViewBag.totalGuide = c.Guides.Count();
             ViewBag.totalUsers = c.Users.Count();

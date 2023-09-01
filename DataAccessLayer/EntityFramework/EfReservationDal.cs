@@ -13,10 +13,7 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfReservationDal : GenericRepository<Reservation>, IReservationDal
     {
-        public List<Reservation> GetAll()
-        {
-            using var c = new Context();
-            return c.Reservations.Include(x=>x.AppUser).ToList();
-        }
+        public EfReservationDal(Context context) : base(context) { }
+        
     }
 }

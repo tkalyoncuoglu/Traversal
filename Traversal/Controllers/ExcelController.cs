@@ -2,7 +2,6 @@
 using ClosedXML.Excel;
 using DataAccessLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OfficeOpenXml;
 using System;
 using Traversal.Models;
@@ -13,9 +12,12 @@ namespace Traversal.Controllers
     {
         private readonly IExcelService _excelService;
 
-        public ExcelController(IExcelService excelService)
+        private Context c;
+        public ExcelController(IExcelService excelService, Context c)
         {
             _excelService = excelService;
+
+            this.c = c;
         }
 
         public IActionResult Index()
@@ -26,7 +28,6 @@ namespace Traversal.Controllers
         public List<DestinationModel> DestinationList()
         {
             List<DestinationModel> destinationModel= new List<DestinationModel>();
-            using var c = new Context();
 
             destinationModel = c.Destinations.Select(x => new DestinationModel
             {

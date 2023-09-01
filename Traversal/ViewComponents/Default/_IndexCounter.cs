@@ -5,9 +5,14 @@ namespace Traversal.ViewComponents.Default
 {
     public class _IndexCounter:ViewComponent
     {
+        private Context c;
+
+        public _IndexCounter(Context c)
+        {
+            this.c = c;
+        }
         public IViewComponentResult Invoke()
         {
-            using var c = new Context();
             ViewBag.v1 = c.Destinations.Count();
             ViewBag.v2 = c.Guides.Count();
             ViewBag.v3 = c.Testimonials.Count();

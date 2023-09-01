@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using DataAccessLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Traversal.ViewComponents.Default
@@ -11,6 +12,7 @@ namespace Traversal.ViewComponents.Default
         {
             _destinationService = destinationService;
         }
+
 
         [HttpGet]
         public IViewComponentResult Invoke()

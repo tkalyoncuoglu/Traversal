@@ -23,7 +23,7 @@ namespace Traversal.Areas.Member.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var values = _commentService.TGetAll().Where(x => x.AppUserID == user.Id).ToList();
+            var values = _commentService.TGetAll().Where(x => x.AppUserId == Convert.ToInt32(user.Id)).ToList();
             return View(values);
         }
     }

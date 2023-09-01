@@ -6,11 +6,14 @@ namespace Traversal.ViewComponents.AdminDashboard
 {
     public class _DashboardRightSideCharts:ViewComponent
     {
-        
+        private Context c;
+        public _DashboardRightSideCharts(Context c) 
+        {
+            this.c = c;
+        }
 
         public IViewComponentResult Invoke()
         {
-            using var c = new Context();
             ViewBag.destination = c.Destinations.Count();
             ViewBag.guests = c.Users.Count();
 ;            return View();

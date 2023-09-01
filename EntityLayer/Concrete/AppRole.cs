@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class AppRole:IdentityRole<int>
+    public class AppRole : IdentityRole<int>
     {
+        public AppRole(string name) : base(name) { }
 
+        public AppRole() { }
     }
 }

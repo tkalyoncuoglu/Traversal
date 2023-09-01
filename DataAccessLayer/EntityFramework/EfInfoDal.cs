@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Abstract;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
@@ -11,5 +12,6 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfInfoDal:GenericRepository<Info>,IInfoDal
     {
+        public EfInfoDal(Context context) : base(context) { }
     }
 }

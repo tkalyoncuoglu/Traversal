@@ -28,7 +28,7 @@ namespace Traversal.Areas.Member.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             ViewBag.name = user.NameSurname;
             ViewBag.v = "Onaylanan Rezervasyonunuz Bulunamadı!";
-            var values=  _reservationService.TGetList().Where(x=>x.Status=="Onaylandı" && x.AppUserID==user.Id).ToList();
+            var values=  _reservationService.TGetList().Where(x=>x.Status=="Onaylandı" && x.AppUserId==user.Id).ToList();
             return View(values);
         }
 
@@ -37,7 +37,7 @@ namespace Traversal.Areas.Member.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             ViewBag.name = user.NameSurname;
             ViewBag.v = "Geçmiş Rezervasyonunuz Bulunamadı!";
-            var values = _reservationService.TGetList().Where(x => x.Status == "Geçmiş Rezervasyon" && x.AppUserID == user.Id).ToList();
+            var values = _reservationService.TGetList().Where(x => x.Status == "Geçmiş Rezervasyon" && x.AppUserId == user.Id).ToList();
             return View(values);
          
         }
@@ -48,7 +48,7 @@ namespace Traversal.Areas.Member.Controllers
             ViewBag.name = user.NameSurname;
             ViewBag.v = "Onay Bekleyen Rezervasyonunuz Bulunamadı!";
 
-            var values = _reservationService.TGetList().Where(x=>x.AppUserID==user.Id && x.Status=="Onay Bekliyor").ToList();
+            var values = _reservationService.TGetList().Where(x=>x.AppUserId==user.Id && x.Status=="Onay Bekliyor").ToList();
          
             
                 return View(values);
@@ -78,7 +78,7 @@ namespace Traversal.Areas.Member.Controllers
         public async Task<IActionResult> NewReservation(Reservation p)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            p.AppUserID= user.Id;
+            p.AppUserId= user.Id;
             p.Status = "Onay Bekliyor";
             _reservationService.TInsert(p);
             return NoContent();

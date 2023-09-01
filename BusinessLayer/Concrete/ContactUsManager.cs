@@ -25,7 +25,7 @@ namespace BusinessLayer.Concrete
 
         public List<ContactUs> TGetActives()
         {
-           return _contactUsDal.GetActives();
+            return _contactUsDal.GetList(x => x.MessageStatus == true);
         }
 
         public ContactUs TGetByID(int id)

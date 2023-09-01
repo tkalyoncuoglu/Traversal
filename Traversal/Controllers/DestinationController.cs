@@ -67,7 +67,7 @@ namespace Traversal.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             ViewBag.name = user.NameSurname;
-            p.AppUserID= user.Id;
+            p.AppUserId= user.Id;
             p.Status = false;
             p.CommentDate = DateTime.Now;
             p.Image= user.Image;

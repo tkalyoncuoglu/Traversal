@@ -25,7 +25,7 @@ namespace BusinessLayer.Concrete
 
         public List<Reservation> TGetAll()
         {
-            return _reservationDal.GetAll();
+            return _reservationDal.Include(new string[] {"AppUser"}).GetList();
         }
 
         public Reservation TGetByID(int id)

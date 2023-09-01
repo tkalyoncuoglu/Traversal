@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Concrete
 {
-    public class Context: IdentityDbContext<AppUser,AppRole,int>
+    public class Context: IdentityDbContext<AppUser, AppRole, int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=ERHAN\\SQLEXPRESS;database=DbTraversal;integrated security=true");
+            optionsBuilder.UseSqlite("Data Source=./mydatabase.db");
         }
 
         public DbSet<About> Abouts { get; set; }

@@ -1,11 +1,13 @@
 using BusinessLayer.Container;
 using DataAccessLayer.Concrete;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using EntityLayer.Concrete;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Traversal.CQRS.Handlers.DestinationHandlers;
 using Traversal.Models;
@@ -22,8 +24,15 @@ builder.Services.AddLogging(x =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddDbContext<Context>();
-builder.Services.AddIdentity<AppUser, AppRole>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider).AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>();
+//builder.Services.AddDbContext<Context>();
+
+
+
+builder.Services.AddIdentity<AppUser, AppRole>().
+    AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider).
+    AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>();
+
+
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.CustomValidator();
@@ -54,7 +63,7 @@ builder.Services.AddMvcCore(config =>
     config.Filters.Add(new AuthorizeFilter(policy));
 }).AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotations();
 
-
+builder.Services.AddSingleton<Context>();
 builder.Services.ContainerDependencies();
 builder.Services.AddScoped<GetAllDestinationsQueryHandler>();
 builder.Services.AddScoped<GetDestinationByIDQueryHandler>();
@@ -67,6 +76,15 @@ builder.Services.AddMediatR(typeof(Program));
 
 
 var app = builder.Build();
+using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+
+    if (!await roleManager.RoleExistsAsync("Member"))
+    {
+        await roleManager.CreateAsync(new AppRole("Member"));
+    }
+}
 
 
 

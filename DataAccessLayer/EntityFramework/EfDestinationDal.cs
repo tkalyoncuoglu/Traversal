@@ -13,9 +13,9 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfDestinationDal : GenericRepository<Destination>, IDestinationDal
     {
+        public EfDestinationDal(Context context) : base(context) { }
         public List<Destination> GetAll()
         {
-            using var c = new Context();
             return c.Destinations.Include(x=>x.Guide).ToList();
         }
     }

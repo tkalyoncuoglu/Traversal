@@ -25,7 +25,7 @@ namespace BusinessLayer.Concrete
 
         public List<Destination> TGetAll()
         {
-          return _destinationDal.GetAll();
+          return _destinationDal.Include(new string[] { "Guide" }).GetList();
         }
 
         public Destination TGetByID(int id)

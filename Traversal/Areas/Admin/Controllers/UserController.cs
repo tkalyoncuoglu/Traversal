@@ -43,7 +43,7 @@ namespace Traversal.Areas.Admin.Controllers
         public IActionResult UserReservations(int id)
         {
             ViewBag.v = "Kullanıcının Rezervasyonu Bulunamadı!";
-            var values = _reservationService.TGetAll().Where(x=>x.AppUserID==id).ToList();
+            var values = _reservationService.TGetAll().Where(x=>x.AppUserId==id).ToList();
             return View(values);
         }
     }

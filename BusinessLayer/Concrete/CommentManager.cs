@@ -25,7 +25,7 @@ namespace BusinessLayer.Concrete
 
         public List<Comment> TGetAll()
         {
-           return _commentDal.GetAll();
+            return _commentDal.Include(new string[] { "Destination", "AppUser" }).GetList();
         }
 
         public Comment TGetByID(int id)

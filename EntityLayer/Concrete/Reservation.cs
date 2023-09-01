@@ -9,7 +9,7 @@ namespace EntityLayer.Concrete
     public class Reservation
     {
         public int ReservationID { get; set; }
-        public int AppUserID { get; set; }
+        public int AppUserId { get; set; }
         public AppUser AppUser  { get; set; }
         public string PeopleCount { get; set; }
         public string Destination { get; set; }

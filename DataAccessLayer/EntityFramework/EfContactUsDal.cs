@@ -12,10 +12,7 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfContactUsDal : GenericRepository<ContactUs>, IContactUsDal
     {
-        public List<ContactUs> GetActives()
-        {
-            using var c = new Context();
-            return c.ContactUses.Where(x=>x.MessageStatus==true).ToList();
-        }
+        public EfContactUsDal(Context context) : base(context) { }
+        
     }
 }
