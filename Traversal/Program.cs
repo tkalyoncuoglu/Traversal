@@ -63,7 +63,7 @@ builder.Services.AddMvcCore(config =>
     config.Filters.Add(new AuthorizeFilter(policy));
 }).AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotations();
 
-builder.Services.AddSingleton<Context>();
+builder.Services.AddScoped<Context>();
 builder.Services.ContainerDependencies();
 builder.Services.AddScoped<GetAllDestinationsQueryHandler>();
 builder.Services.AddScoped<GetDestinationByIDQueryHandler>();
@@ -83,6 +83,11 @@ using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().Creat
     if (!await roleManager.RoleExistsAsync("Member"))
     {
         await roleManager.CreateAsync(new AppRole("Member"));
+    }
+
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new AppRole("Admin"));
     }
 }
 

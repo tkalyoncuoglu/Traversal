@@ -48,7 +48,9 @@ namespace Traversal.Controllers
                   
 					await _userManager.AddToRoleAsync(appUser,"Member");
 
-					return RedirectToAction("SignIn");
+                    await _userManager.AddToRoleAsync(appUser, "Admin");
+
+                    return RedirectToAction("SignIn");
                 }
 
                 else
@@ -77,6 +79,7 @@ namespace Traversal.Controllers
 
             };
             var result = await _signInManager.PasswordSignInAsync(p.Username, p.Password, false, false);
+       
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Dashboard", new {area="Member"});
