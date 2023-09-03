@@ -30,35 +30,31 @@ namespace SignalRApiForSql.Models
 
         public List<VisitorChart> GetVisitorChartList()
         {
-            List<VisitorChart> visitorCharts = new List<VisitorChart>();
-            using (var command = _context.Database.GetDbConnection().CreateCommand())
+            var visitors = _context.Visitors.OrderBy(x => x.VisitDate).ToList();
+
+            var visitorCharts = new List<VisitorChart>();
+
+            for (int i = 0, j = 0; i < visitors.Count; i++)
             {
-                command.CommandText = "exec SignalRPivot";
-                command.CommandType = System.Data.CommandType.Text;
-                _context.Database.OpenConnection();
-                using (var reader = command.ExecuteReader())
+                if (i == 0)
                 {
-                    while (reader.Read())
-                    {
-                        VisitorChart visitorChart = new VisitorChart();
-                        visitorChart.VisitDate = reader.GetDateTime(0).ToShortDateString();
-                        Enumerable.Range(1, 5).ToList().ForEach(x =>
-                        {
-                            if (DBNull.Value.Equals(reader[x]))
-                            {
-                                visitorChart.Counts.Add(0);
-                            }
-                            else
-                            {
-                                visitorChart.Counts.Add(reader.GetInt32(x));
-                            }
-                        });
-                        visitorCharts.Add(visitorChart);
-                    }
+                    visitorCharts.Add(new VisitorChart() { Id = j, VisitDate = visitors[i].VisitDate.Date.ToString() });
+                    j++;
+
                 }
-                _context.Database.CloseConnection();
-                return visitorCharts;
+                else if (visitors[i].VisitDate.Date == visitors[i - 1].VisitDate.Date)
+                {
+                    visitorCharts[j - 1].Counts.Add(visitors[i].CityVisitCount);
+                }
+                else
+                {
+                    visitorCharts.Add(new VisitorChart() { Id = j, VisitDate = visitors[i].VisitDate.Date.ToString() });
+                    j++;
+                }
             }
+
+            return visitorCharts;
+            
         }
     }
 }

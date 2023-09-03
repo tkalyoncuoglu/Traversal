@@ -2,12 +2,8 @@
 {
     public class VisitorChart
     {
-        public VisitorChart()
-        {
-            Counts = new List<int>();
-        }
-
+        public int Id { get; set; }
         public string VisitDate { get; set; }
-        public List<int> Counts { get; set; }
+        public List<int> Counts { get; set; } = new(); 
     }
 }

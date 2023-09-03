@@ -5,26 +5,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SignalRApiForSql.Migrations
 {
-    public partial class migsignalrsql : Migration
+    /// <inheritdoc />
+    public partial class InitialMigration : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Visitors",
                 columns: table => new
                 {
-                    VisitorID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    City = table.Column<int>(type: "int", nullable: false),
-                    CityVisitCount = table.Column<int>(type: "int", nullable: false),
-                    VisitDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    City = table.Column<int>(type: "INTEGER", nullable: false),
+                    CityVisitCount = table.Column<int>(type: "INTEGER", nullable: false),
+                    VisitDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Visitors", x => x.VisitorID);
+                    table.PrimaryKey("PK_Visitors", x => x.Id);
                 });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

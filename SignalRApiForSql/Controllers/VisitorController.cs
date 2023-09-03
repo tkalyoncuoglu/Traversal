@@ -17,24 +17,24 @@ namespace SignalRApiForSql.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateVisitor()
+        public async Task<IActionResult> CreateVisitor()
         {
             Random random = new Random();
-            Enumerable.Range(1, 10).ToList().ForEach(x =>
-            {
+            for (int i = 1; i < 10; i++)
+            { 
                 foreach (ECity item in Enum.GetValues(typeof(ECity)))
-                {
+                { 
                     var newVisitor = new Visitor
                     {
                         City = item,
                         CityVisitCount = random.Next(100, 2000),
-                        VisitDate = DateTime.Now.AddDays(x)
+                        VisitDate = DateTime.Now.AddDays(i)
 
                     };
-                    _visitorService.SaveVisitor(newVisitor).Wait();
-                    Thread.Sleep(1000);
+                    await _visitorService.SaveVisitor(newVisitor);
+                   
                 }
-            });
+            };
             return Ok("Ziyaretçiler başarılı bir şekilde eklendi.");
         }
     }

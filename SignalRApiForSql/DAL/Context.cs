@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SignalRApiForSql.Models;
 
 namespace SignalRApiForSql.DAL
 {
@@ -13,9 +14,10 @@ namespace SignalRApiForSql.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlite("Data Source=signalR.db");
         }
 
         public DbSet<Visitor> Visitors { get; set; }
+
     }
 }
