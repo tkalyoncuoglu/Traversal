@@ -38,17 +38,17 @@ namespace SignalRApiForSql.Models
             {
                 if (i == 0)
                 {
-                    visitorCharts.Add(new VisitorChart() { Id = j, VisitDate = visitors[i].VisitDate.Date.ToString() });
+                    visitorCharts.Add(new VisitorChart() { Id = j, VisitDate = visitors[i].VisitDate.Date.ToString("dd/MM/yyyy") });
                     j++;
 
                 }
                 else if (visitors[i].VisitDate.Date == visitors[i - 1].VisitDate.Date)
                 {
-                    visitorCharts[j - 1].Counts.Add(visitors[i].CityVisitCount);
+                    visitorCharts[j - 1].Counts[(int)visitors[i].City - 1] += visitors[i].CityVisitCount;
                 }
                 else
                 {
-                    visitorCharts.Add(new VisitorChart() { Id = j, VisitDate = visitors[i].VisitDate.Date.ToString() });
+                    visitorCharts.Add(new VisitorChart() { Id = j, VisitDate = visitors[i].VisitDate.Date.ToString("dd/MM/yyyy") });
                     j++;
                 }
             }
